@@ -11,10 +11,10 @@
 
 <body>
     <div class="container">
-        <h1 style="color: black; font-size: 40px;">ToDo List </h1>
+        <h1 style="color: white; font-size: 40px;">ToDo List </h1>
         <div class="search">
             <input type="text" id="task" name="task" class="txt"> <button type="button" style="border-radius: 50px;"
-                class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#exampleModal"
                 data-bs-whatever="@mdo">Add</button>
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
@@ -27,16 +27,16 @@
                         <div class="modal-body">
                             <form>
                                 <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">title:</label>
+                                    <label for="message-text" class="col-form-label">title</label>
                                     <textarea class="form-control" id="message-text"></textarea>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">description:</label>
+                                    <label for="message-text" class="col-form-label">description</label>
                                     <textarea class="form-control" id="message-text"></textarea>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">date:</label>
-                                    <textarea class="form-control" id="message-text"></textarea>
+                                    <label for="message-text" class="col-form-label">date</label>
+                                    <input type="date" id="date1" name="date1">
                                 </div>
                                 <label for="customRange2" class="form-label">rank (0-5)</label>
                                 <input type="range" class="form-range" min="0" max="5" id="customRange2">
@@ -50,14 +50,44 @@
                 </div>
 
             </div>
-
-        </div>
-
-        <div class="flex container">
-            <div style="width:50%;  background-color: black; ">
-                <h3>date-title</h3>
+            
+            <div class="flexcontainer">
+                
+                <div class="filter">
+                    <input type="date" id="date2" name="date2" style="border: none; background-color: azure;
+                     width: 200px;
+            text-align: center;
+            cursor: pointer; ">
+                    <select name="cars" id="cars" style="border: none; background-color: azure;">
+                        <option value="volvo">Completed</option>
+                        <option value="saab">Pending</option>
+                       
+                      </select>
+                      <button type="button" style="border-radius: 50px;"
+                    class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    data-bs-whatever="@mdo">Search</button>  
+    
+                </div>
+                <div class="container3" style="overflow:auto; display: flex; flex-direction: column; height: 200px;  
+                ">
+                <div class="task" >
+                    <h3>date-title</h3>
+                </div>
+                <div class="task">
+                    <h3>date-title</h3>
+                </div> <div class="task">
+                    <h3>date-title</h3>
+                </div> <div class="task">
+                    <h3>date-title</h3>
+                </div> <div class="task">
+                    <h3>date-title</h3>
+                </div>
             </div>
+            </div>
+            
         </div>
+
+      
     </div>
 
 
