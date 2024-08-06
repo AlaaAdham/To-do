@@ -33,15 +33,18 @@ border: none;
     padding-top: 10px;
     flex-direction: column;
     height: 350px;
+    border: 1px solid rgb(129, 203, 246);
+
 }
 .task{
     margin: 5%;
-    background-color:rgb(48, 147, 234); 
+    background-color:white; 
     margin-top: 10px;
     border-radius:  15px;
     height: 100px;    
     padding: 10px;
     flex-direction: column;
+    border: 1px solid rgb(129, 203, 246);
 
 }
 .filter{
