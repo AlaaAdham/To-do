@@ -27,61 +27,49 @@
                         <div class="modal-body">
                             <form>
                                 <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">title</label>
-                                    <textarea class="form-control" id="message-text"></textarea>
+                                    <label for="title" class="col-form-label">title</label>
+                                    <textarea class="form-control" id="title"></textarea>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">description</label>
-                                    <textarea class="form-control" id="message-text"></textarea>
+                                    <label for="des" class="col-form-label">description</label>
+                                    <textarea class="form-control" id="des"></textarea>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">date</label>
-                                    <input type="date" id="date1" name="date1">
+                                    <label for="date" class="col-form-label">date</label>
+                                    <input type="date" id="date" name="date">
                                 </div>
-                                <label for="customRange2" class="form-label">rank (0-5)</label>
-                                <input type="range" class="form-range" min="0" max="5" id="customRange2">
+                                <label for="rank" class="form-label">rank (0-5)</label>
+                                <input type="range" class="form-range" min="0" max="5" id="rank">
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save</button>
+                            <button type="button" class="btn btn-primary" onclick="addTask()">Save</button>
                         </div>
                     </div>
                 </div>
 
             </div>
             
-            <div class="flexcontainer">
+            <div class="flexcontainer" >
                 
-                <div class="filter">
+                <div class="filter" >
                     <input type="date" id="date2" name="date2" style="border: none; background-color: azure;
                      width: 200px;
             text-align: center;
             cursor: pointer; ">
-                    <select name="cars" id="cars" style="border: none; background-color: azure;">
-                        <option value="volvo">Completed</option>
-                        <option value="saab">Pending</option>
+                    <select name="status" id="status" style="border: none; background-color: azure;">
+                        <option value="All">All</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Pending">Pending</option>
                        
                       </select>
                       <button type="button" style="border-radius: 50px;"
-                    class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                    data-bs-whatever="@mdo">Search</button>  
+                    class="btn btn-outline-info" onclick="searchTask()"  >Search</button>  
     
                 </div>
-                <div class="container3" style="overflow:auto; display: flex; flex-direction: column; height: 200px;  
+                <div class="container3" id="container3" style="overflow:auto; display: flex; flex-direction: column; height: 250px;  
                 ">
-                <div class="task" >
-                    <h3>date-title</h3>
-                </div>
-                <div class="task">
-                    <h3>date-title</h3>
-                </div> <div class="task">
-                    <h3>date-title</h3>
-                </div> <div class="task">
-                    <h3>date-title</h3>
-                </div> <div class="task">
-                    <h3>date-title</h3>
-                </div>
             </div>
             </div>
             
@@ -92,7 +80,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+<script src="script.js"></script>
 </body>
 
 </html>

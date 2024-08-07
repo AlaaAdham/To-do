@@ -1,11 +1,13 @@
 .container{
 background-color: rgb(129, 203, 246);
 width: 80%;
-margin: 9%;
+margin: 3%;
+margin-left: 135px;
 border-radius: 15px;
 text-align: center;
 padding-top: 20px;
 padding-bottom: 20px;
+
 
 }
 .search{
@@ -41,7 +43,6 @@ border: none;
     background-color:white; 
     margin-top: 10px;
     border-radius:  15px;
-    height: 100px;    
     padding: 10px;
     flex-direction: column;
     border: 1px solid rgb(129, 203, 246);
