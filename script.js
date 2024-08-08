@@ -1,18 +1,22 @@
 class TaskManager {
     constructor() {
+        this.init()
+    }
+
+    init(){
         this.tasks = JSON.parse(localStorage.getItem("tasks")) || [];
     }
 
     addTask(task) {
-        this.tasks.push(task);
-        this.saveTasks();
-        this.loadTasks(this.tasks);
+       try{
+            this.validateTask(task);
 
-        // Clear input fields
-        $("#title").val('');
-        $("#des").val('');
-        $("#date").val('');
-        $("#rank").val(0);
+            this.tasks.push(task);
+
+            this.saveTasks();  
+       }catch(e){
+            alert(e.message)
+       }      
     }
 
     saveTasks() {
@@ -27,7 +31,7 @@ class TaskManager {
             }
         });
         this.saveTasks();
-        this.loadTasks(this.tasks); // Refresh the displayed tasks
+        // this.loadTasks(this.tasks); // Refresh the displayed tasks
     }
 
     deleteTask(title) {
@@ -39,38 +43,61 @@ class TaskManager {
     loadTasks(tasks) {
         const listTask = document.getElementById("container3");
         listTask.innerHTML = ''; // Clear the container before loading tasks
+    
         tasks.forEach(task => {
             let taskDiv = document.createElement('div');
             taskDiv.classList.add('task');
             taskDiv.id = `${task.title}`;
+    
+            // Check if the task is done and conditionally add the "Done" button
+            const doneButton = task.isDone ? '' : `
+                <button type="button" class="btn btn-outline-info mark-done-task">Done</button>`;
+    
+            // Use a different style for completed tasks
+            const taskStyle = task.isDone ? 'text-decoration: line-through;' : '';
+    
             taskDiv.innerHTML = `
-                <h2>${task.date} - ${task.title}</h2>
+                <h2 style="${taskStyle}">${task.date} - ${task.title}</h2>
                 <p>${task.description}</p>
                 <p>Rank: ${task.rank}</p>
                 <div class="buttons">
-                <button type="button" class="btn btn-outline-info delete-task">Delete</button>  
-                <button type="button" class="btn btn-outline-info mark-done-task">Done</button>  
+                    <button type="button" class="btn btn-outline-info delete-task">Delete</button>  
+                    ${doneButton} 
                 </div>
             `;
             listTask.appendChild(taskDiv);
         });
+    
         const me = this;
         // Attach event handlers to dynamically added buttons
         $('.delete-task').click(function () {
             const taskTitle = $(this).parent().parent().attr('id');
             me.deleteTask(taskTitle);
-        })
+        });
+    
         $('.mark-done-task').click(function () {
             const taskTitle = $(this).parent().parent().attr('id');
             me.markDone(taskTitle);
-        })
+            loadTasks(taskManager.tasks)
+        });
     }
+    
 
     searchTask(state, date) {
         const result = this.tasks.filter(task => task.isDone === (state === "Completed") && task.date === date);
-        $('#container3').empty();
-        document.getElementById("container3").innerHTML = "";
-        this.loadTasks(result);
+        return result;
+    }
+
+    validateTask(task){
+        // if (task.description === "") alert("Please fill in the description before adding a task.");
+        // else if (task.date === "") alert("Please fill in the date before adding a task.");
+        // else if (task.rank === "") alert("Please fill in the rank before adding a task.");
+        if(task.description === ""){
+            throw new Error("desc is required.");
+        }
+        // if(!(!!task.description)){
+
+        // }
     }
 }
 
@@ -84,19 +111,16 @@ $(document).ready(function () {
         const description = $("#des").val();
         const date = $("#date").val();
         const rank = $("#rank").val();
-        if (description === "") alert("Please fill in the description before adding a task.");
-        else if (date === "") alert("Please fill in the date before adding a task.");
-        else if (rank === "") alert("Please fill in the rank before adding a task.");
-        else {
-            let task = {
-                title,
-                description,
-                date,
-                rank,
-                isDone: false
-            };
-            taskManager.addTask(task);
-        }
+        let task = {
+            title,
+            description,
+            date,
+            rank,
+            isDone: false
+        };
+       
+        taskManager.addTask(task);
+        taskManager.loadTasks(taskManager.tasks);
     });
     // $(".delete-task").click(function () {
     //     taskManager.deleteTask($("#title").val());
@@ -109,9 +133,14 @@ $(document).ready(function () {
     $("#search").click(function () {
         const date = $("#date2").val();
         const state = $("#status").val();
-        taskManager.searchTask(state, date);
+        const res = taskManager.searchTask(state, date);
+        $('#container3').empty();
+        document.getElementById("container3").innerHTML = "";
+        taskManager.loadTasks(res);
     });
 });
+
+
 function transferInputToTextarea() {
     const taskInput = document.getElementById('taskbutton').value;
     if (taskInput === "") {
@@ -126,3 +155,10 @@ function transferInputToTextarea() {
     titleTextarea.value = taskInput;
 }
 
+function clearFlds(){
+     // Clear input fields
+     $("#title").val('');
+     $("#des").val('');
+     $("#date").val('');
+     $("#rank").val(0);
+}
