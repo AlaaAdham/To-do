@@ -98,18 +98,7 @@ function markDone(title) {
         }
     })
     
-    // const taskDiv = document.getElementById(title);
-    // if (taskDiv) {
-    //     // Find the buttons container using a unique ID
-    //     const buttonsContainer = document.getElementById(`buttons`);
-    //     if (buttonsContainer) {
-    //         buttonsContainer.style.display = 'none'; // Hide the buttons container
-    //     } else {
-    //         console.log(`Buttons container with id "buttons-${title}" not found.`);
-    //     }
-    // } else {
-    //     console.log(`Task div with id ${title} not found.`);
-    // }
+   
     localStorage.clear();
     location.reload();
 
