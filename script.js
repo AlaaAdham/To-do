@@ -6,7 +6,7 @@ class TaskManager {
     addTask(task) {
         this.tasks.push(task);
         this.saveTasks();
-        this.loadTasks();
+        this.loadTasks(this.tasks);
 
         // Clear input fields
         $("#title").val('');
@@ -36,10 +36,10 @@ class TaskManager {
         this.loadTasks(this.tasks); // Refresh the displayed tasks
     }
 
-    loadTasks(tasksDiv) {
+    loadTasks(tasks) {
         const listTask = document.getElementById("container3");
         listTask.innerHTML = ''; // Clear the container before loading tasks
-        tasksDiv.forEach(task => {
+        tasks.forEach(task => {
             let taskDiv = document.createElement('div');
             taskDiv.classList.add('task');
             taskDiv.id = `${task.title}`;
@@ -77,7 +77,7 @@ class TaskManager {
 const taskManager = new TaskManager();
 
 $(document).ready(function () {
-    taskManager.loadTasks(this.tasks); // Load tasks when the instance is created
+    taskManager.loadTasks(taskManager.tasks); // Load tasks when the instance is created
 
     $("#add").click(function () {
         const title = $("#title").val();
@@ -95,18 +95,16 @@ $(document).ready(function () {
                 rank,
                 isDone: false
             };
-
             taskManager.addTask(task);
         }
     });
+    // $(".delete-task").click(function () {
+    //     taskManager.deleteTask($("#title").val());
+    // });
 
-    $("#delete").click(function () {
-        taskManager.deleteTask($("#title").val());
-    });
-
-    $("#done").click(function () {
-        taskManager.markDone($("#title").val());
-    });
+    // $(".mark-done-task").click(function () {
+    //     taskManager.markDone($("#title").val());
+    // });
 
     $("#search").click(function () {
         const date = $("#date2").val();
