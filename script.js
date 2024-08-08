@@ -25,11 +25,10 @@ class TaskManager {
             this.loadTasks();
 
             // Clear input fields
-            document.getElementById('title').value = '';
-            document.getElementById('des').value = '';
-            document.getElementById('date').value = '';
-            document.getElementById('rank').value = '0';
-            document.getElementById('taskbutton').value = '';
+            $("#title").val('');
+            $("#des").val('');
+            $("#date").val('');
+            $("#rank").val(0);
         }
     }
 
