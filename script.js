@@ -3,33 +3,16 @@ class TaskManager {
         this.tasks = JSON.parse(localStorage.getItem("tasks")) || [];
     }
 
-    addTask() {
-        console.log("addTask");
-        const title = $("#title").val();
-        const description = $("#des").val();
-        const date = $("#date").val();
-        const rank = $("#rank").val();
-        if (description === "") alert("Please fill in the description before adding a task.");
-        else if (date === "") alert("Please fill in the date before adding a task.");
-        else if (rank === "") alert("Please fill in the rank before adding a task.");
-        else {
-            let task = {
-                title,
-                description,
-                date,
-                rank,
-                isDone: false
-            };
-            this.tasks.push(task);
-            this.saveTasks();
-            this.loadTasks();
+    addTask(task) {
+        this.tasks.push(task);
+        this.saveTasks();
+        this.loadTasks();
 
-            // Clear input fields
-            $("#title").val('');
-            $("#des").val('');
-            $("#date").val('');
-            $("#rank").val(0);
-        }
+        // Clear input fields
+        $("#title").val('');
+        $("#des").val('');
+        $("#date").val('');
+        $("#rank").val(0);
     }
 
     saveTasks() {
@@ -44,20 +27,19 @@ class TaskManager {
             }
         });
         this.saveTasks();
-        this.loadTasks(); // Refresh the displayed tasks
+        this.loadTasks(this.tasks); // Refresh the displayed tasks
     }
 
     deleteTask(title) {
-        console.log("deleteTask");
         this.tasks = this.tasks.filter(task => task.title !== title);
         this.saveTasks();
-        this.loadTasks(); // Refresh the displayed tasks
+        this.loadTasks(this.tasks); // Refresh the displayed tasks
     }
 
-    loadTasks() {
-        const listTask = document.querySelector('.container3');
+    loadTasks(tasksDiv) {
+        const listTask = document.getElementById("container3");
         listTask.innerHTML = ''; // Clear the container before loading tasks
-        this.tasks.forEach(task => {
+        tasksDiv.forEach(task => {
             let taskDiv = document.createElement('div');
             taskDiv.classList.add('task');
             taskDiv.id = `${task.title}`;
@@ -67,7 +49,7 @@ class TaskManager {
                 <p>Rank: ${task.rank}</p>
                 <div class="buttons">
                 <button type="button" class="btn btn-outline-info delete-task">Delete</button>  
-                <button type="button" class="btn btn-outline-info mark-done-task" style="border-radius: 50px;">Done</button>  
+                <button type="button" class="btn btn-outline-info mark-done-task">Done</button>  
                 </div>
             `;
             listTask.appendChild(taskDiv);
@@ -84,38 +66,52 @@ class TaskManager {
         })
     }
 
-    searchTask() {
-        const date =  $("#date2").val();
-        let state = $("#status").val();
-        const result = this.tasks.filter(task => task.isDone === (state==="Completed") && task.date === date);
+    searchTask(state, date) {
+        const result = this.tasks.filter(task => task.isDone === (state === "Completed") && task.date === date);
         $('#container3').empty();
         document.getElementById("container3").innerHTML = "";
-        this.tasks = result; // Temporarily set this.tasks to result for filtered view
-        this.loadTasks();
-        this.tasks = JSON.parse(localStorage.getItem("tasks")) || []; // Restore original tasks after search
+        this.loadTasks(result);
     }
 }
 
 const taskManager = new TaskManager();
 
 $(document).ready(function () {
-    taskManager.loadTasks(); // Load tasks when the instance is created
+    taskManager.loadTasks(this.tasks); // Load tasks when the instance is created
 
     $("#add").click(function () {
+        const title = $("#title").val();
+        const description = $("#des").val();
+        const date = $("#date").val();
+        const rank = $("#rank").val();
+        if (description === "") alert("Please fill in the description before adding a task.");
+        else if (date === "") alert("Please fill in the date before adding a task.");
+        else if (rank === "") alert("Please fill in the rank before adding a task.");
+        else {
+            let task = {
+                title,
+                description,
+                date,
+                rank,
+                isDone: false
+            };
 
-        taskManager.addTask();
+            taskManager.addTask(task);
+        }
     });
-    
+
     $("#delete").click(function () {
         taskManager.deleteTask($("#title").val());
     });
-    
+
     $("#done").click(function () {
         taskManager.markDone($("#title").val());
     });
-    
+
     $("#search").click(function () {
-        taskManager.searchTask(title, date); 
+        const date = $("#date2").val();
+        const state = $("#status").val();
+        taskManager.searchTask(state, date);
     });
 });
 function transferInputToTextarea() {
