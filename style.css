@@ -60,3 +60,12 @@ border: none;
     justify-content: space-between; 
     gap: 20px; /* Optional gap between columns */
 }
+.task h2{
+    font-size:18px ;
+}
+.buttons{
+    margin-left:185px;
+}
+.btn{
+    border-radius: 50px;
+}
