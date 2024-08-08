@@ -81,7 +81,6 @@ class TaskManager {
             loadTasks(taskManager.tasks)
         });
     }
-    
 
     searchTask(state, date) {
         const result = this.tasks.filter(task => task.isDone === (state === "Completed") && task.date === date);
@@ -89,15 +88,15 @@ class TaskManager {
     }
 
     validateTask(task){
-        // if (task.description === "") alert("Please fill in the description before adding a task.");
-        // else if (task.date === "") alert("Please fill in the date before adding a task.");
-        // else if (task.rank === "") alert("Please fill in the rank before adding a task.");
         if(task.description === ""){
             throw new Error("desc is required.");
         }
-        // if(!(!!task.description)){
-
-        // }
+        if(task.date === ""){
+            throw new Error("date is required.");
+        }
+        if(task.rank === ""){
+            throw new Error("rank is required.");
+        }
     }
 }
 
