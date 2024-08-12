@@ -26,14 +26,13 @@ class TaskManager {
     }
 
     markDone(title) {
-        console.log("markDone");
         this.tasks.forEach(task => {
             if (task.title === title) {
                 task.isDone = true;
             }
         });
         this.saveTasks();
-        // this.loadTasks(this.tasks); // Refresh the displayed tasks
+        this.loadTasks(this.tasks); // Refresh the displayed tasks
     }
 
     deleteTask(title) {
@@ -43,45 +42,15 @@ class TaskManager {
     }
 
     loadTasks(tasks) {
+        cleardiv();
         const listTask = document.getElementById("container3");
-        listTask.innerHTML = ''; // Clear the container before loading tasks
-
         tasks.forEach(task => {
-            let taskDiv = document.createElement('div');
-            taskDiv.classList.add('task');
-            taskDiv.id = `${task.title}`;
-
-            // Check if the task is done and conditionally add the "Done" button
-            const doneButton = task.isDone ? '' : `
-                <button type="button" class="btn btn-outline-info mark-done-task">Done</button>`;
-
-            // Use a different style for completed tasks
-            const taskStyle = task.isDone ? 'text-decoration: line-through;' : '';
-
-            taskDiv.innerHTML = `
-                <h2 style="${taskStyle}">${task.date} - ${task.title}</h2>
-                <p>${task.description}</p>
-                <p>Rank: ${task.rank}</p>
-                <div class="buttons">
-                    <button type="button" class="btn btn-outline-info delete-task">Delete</button>  
-                    ${doneButton} 
-                </div>
-            `;
+            let taskDiv = creatediv(task);
             listTask.appendChild(taskDiv);
+          
         });
-
-        const me = this;
-        // Attach event handlers to dynamically added buttons
-        $('.delete-task').click(function () {
-            const taskTitle = $(this).parent().parent().attr('id');
-            me.deleteTask(taskTitle);
-        });
-
-        $('.mark-done-task').click(function () {
-            const taskTitle = $(this).parent().parent().attr('id');
-            me.markDone(taskTitle);
-            loadTasks(taskManager.tasks)
-        });
+        buttonaction(this);
+        
     }
 
     searchTask(state, date) {
@@ -155,4 +124,43 @@ function clearFlds() {
     $("#des").val('');
     $("#date").val('');
     $("#rank").val(0);
+}
+function cleardiv()
+{
+    const listTask = document.getElementById("container3");
+    listTask.innerHTML = ''; 
+}
+function creatediv(task){
+   let taskDiv = document.createElement('div');
+            taskDiv.classList.add('task');
+            taskDiv.id = `${task.title}`;
+
+            
+            const doneButton = task.isDone ? '' : `
+                <button type="button" class="btn btn-outline-info mark-done-task">Done</button>`;
+
+           
+            const taskStyle = task.isDone ? 'text-decoration: line-through;' : '';
+
+            taskDiv.innerHTML = `
+                <h2 style="${taskStyle}">${task.date} - ${task.title}</h2>
+                <p>${task.description}</p>
+                <p>Rank: ${task.rank}</p>
+                <div class="buttons">
+                    <button type="button" class="btn btn-outline-info delete-task">Delete</button>  
+                    ${doneButton} 
+                </div>
+            `;
+            return taskDiv;
+}
+function buttonaction(me){
+        $('.delete-task').click(function () {
+            const taskTitle = $(this).parent().parent().attr('id');
+            me.deleteTask(taskTitle);
+        });
+
+        $('.mark-done-task').click(function () {
+            const taskTitle = $(this).parent().parent().attr('id');
+            me.markDone(taskTitle);
+        });
 }
